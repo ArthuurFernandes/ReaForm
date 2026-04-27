@@ -1,0 +1,226 @@
+<main class="page">
+  <section class="card">
+    <header class="hero">
+      <img
+        class="brand-image"
+        src="/img/ifes-horizontal-cor.png"
+        alt="Logo do IFES"
+      />
+      <div class="hero-copy">
+        <p class="eyebrow">Reactive Forms</p>
+        <h1>Ficha de matricula IFES</h1>
+        <p class="subtitle">
+          Preencha os campos abaixo. Os itens marcados com
+          <span class="required">*</span>
+          sao obrigatorios.
+        </p>
+      </div>
+    </header>
+
+    <form
+      [formGroup]="matriculaForm"
+      class="form"
+      novalidate
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="grid">
+        <div class="field field-full">
+          <label for="nome">Nome completo <span class="required">*</span></label>
+          <input
+            id="nome"
+            type="text"
+            formControlName="nome"
+            autocomplete="name"
+            placeholder="Digite o nome completo"
+          />
+
+          @if (hasControlError('nome', 'required')) {
+            <p class="error">O nome e obrigatorio.</p>
+          }
+
+          @if (hasControlError('nome', 'minlength')) {
+            <p class="error">O nome deve ter no minimo 3 caracteres.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="email">E-mail <span class="required">*</span></label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            autocomplete="email"
+            placeholder="voce@exemplo.com"
+          />
+
+          @if (hasControlError('email', 'required')) {
+            <p class="error">O e-mail e obrigatorio.</p>
+          }
+
+          @if (hasControlError('email', 'email')) {
+            <p class="error">Informe um e-mail valido.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="idade">Idade <span class="required">*</span></label>
+          <input
+            id="idade"
+            type="number"
+            formControlName="idade"
+            min="18"
+            placeholder="18"
+          />
+
+          @if (hasControlError('idade', 'required')) {
+            <p class="error">A idade e obrigatoria.</p>
+          }
+
+          @if (hasControlError('idade', 'min')) {
+            <p class="error">A idade minima e 18 anos.</p>
+          }
+        </div>
+
+        <div class="field field-full">
+          <div class="phones-header">
+            <div>
+              <label>Telefone <span class="required">*</span></label>
+              <p class="helper">Voce pode informar um ou mais telefones.</p>
+            </div>
+
+            <button type="button" class="secondary" (click)="addTelefone()">
+              Adicionar telefone
+            </button>
+          </div>
+
+          <div class="phones-list" formArrayName="telefones">
+            @for (telefone of telefones.controls; track telefone; let i = $index) {
+              <div class="phone-row">
+                <div class="phone-field">
+                  <input
+                    [id]="'telefone-' + i"
+                    type="tel"
+                    [formControlName]="i"
+                    autocomplete="tel"
+                    placeholder="(27) 99999-9999"
+                  />
+
+                  @if (hasPhoneError(i, 'required')) {
+                    <p class="error">Informe um telefone.</p>
+                  }
+
+                  @if (hasPhoneError(i, 'pattern')) {
+                    <p class="error">Informe um telefone valido.</p>
+                  }
+                </div>
+
+                <button
+                  type="button"
+                  class="icon-button"
+                  [disabled]="telefones.length === 1"
+                  (click)="removeTelefone(i)"
+                  [attr.aria-label]="'Remover telefone ' + (i + 1)"
+                >
+                  Remover
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="genero">Genero <span class="required">*</span></label>
+          <select id="genero" formControlName="genero">
+            <option value="">Selecione um genero</option>
+            @for (genero of generos; track genero) {
+              <option [value]="genero">{{ genero }}</option>
+            }
+          </select>
+
+          @if (hasControlError('genero', 'required')) {
+            <p class="error">O genero e obrigatorio.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="cidade">Cidade <span class="required">*</span></label>
+          <select id="cidade" formControlName="cidade">
+            <option value="">Selecione uma cidade</option>
+            @for (cidade of cidades; track cidade) {
+              <option [value]="cidade">{{ cidade }}</option>
+            }
+          </select>
+
+          @if (hasControlError('cidade', 'required')) {
+            <p class="error">A cidade e obrigatoria.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha <span class="required">*</span></label>
+          <input
+            id="senha"
+            type="password"
+            formControlName="senha"
+            autocomplete="new-password"
+            placeholder="Minimo de 8 caracteres"
+          />
+
+          @if (hasControlError('senha', 'required')) {
+            <p class="error">A senha e obrigatoria.</p>
+          }
+
+          @if (hasControlError('senha', 'minlength')) {
+            <p class="error">A senha deve ter no minimo 8 caracteres.</p>
+          }
+        </div>
+
+        <div class="field">
+          <label for="confirmarSenha">
+            Confirmar senha <span class="required">*</span>
+          </label>
+          <input
+            id="confirmarSenha"
+            type="password"
+            formControlName="confirmarSenha"
+            autocomplete="new-password"
+            placeholder="Repita a senha"
+          />
+
+          @if (hasControlError('confirmarSenha', 'required')) {
+            <p class="error">A confirmacao de senha e obrigatoria.</p>
+          }
+
+          @if (hasPasswordMismatch()) {
+            <p class="error">A confirmacao deve ser igual ao campo senha.</p>
+          }
+        </div>
+
+        <div class="field field-full">
+          <label class="checkbox-label" for="termos">
+            <input id="termos" type="checkbox" formControlName="termos" />
+            <span>
+              Aceito os termos de uso
+              <span class="required">*</span>
+            </span>
+          </label>
+
+          @if (hasControlError('termos', 'required')) {
+            <p class="error">Voce precisa aceitar os termos para continuar.</p>
+          }
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" [disabled]="matriculaForm.invalid">Cadastrar</button>
+        <button type="button" class="secondary" (click)="resetForm()">
+          Limpar
+        </button>
+      </div>
+    </form>
+  </section>
+
+  @if (resumoCadastro(); as resumo) {
+    <app-resumo-modal [resumo]="resumo" (fechar)="fecharResumo()" />
+  }
+</main>

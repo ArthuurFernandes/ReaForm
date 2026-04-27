@@ -1,0 +1,70 @@
+<section class="modal-backdrop" (click)="onBackdropClick()">
+  <div
+    class="modal-panel"
+    aria-labelledby="resumo-modal-titulo"
+    aria-modal="true"
+    role="dialog"
+    (click)="$event.stopPropagation()"
+  >
+    <header class="modal-header">
+      <div>
+        <p class="eyebrow">Dados enviados</p>
+        <h2 id="resumo-modal-titulo">Resumo do cadastro</h2>
+      </div>
+
+      <button
+        type="button"
+        class="close-button"
+        aria-label="Fechar resumo"
+        (click)="fechar.emit()"
+      >
+        x
+      </button>
+    </header>
+
+    <p class="summary-status">Formulario validado com sucesso.</p>
+
+    <dl class="summary-grid">
+      <div>
+        <dt>Nome</dt>
+        <dd>{{ resumo.nome }}</dd>
+      </div>
+      <div>
+        <dt>E-mail</dt>
+        <dd>{{ resumo.email }}</dd>
+      </div>
+      <div>
+        <dt>Idade</dt>
+        <dd>{{ resumo.idade }} anos</dd>
+      </div>
+      <div>
+        <dt>Genero</dt>
+        <dd>{{ resumo.genero }}</dd>
+      </div>
+      <div>
+        <dt>Cidade</dt>
+        <dd>{{ resumo.cidade }}</dd>
+      </div>
+      <div>
+        <dt>Senha</dt>
+        <dd>{{ resumo.senhaMascarada }}</dd>
+      </div>
+      <div class="summary-full">
+        <dt>Telefones</dt>
+        <dd class="phone-summary">
+          @for (telefone of resumo.telefones; track $index) {
+            <span>{{ telefone }}</span>
+          }
+        </dd>
+      </div>
+      <div>
+        <dt>Termos aceitos</dt>
+        <dd>{{ resumo.termos ? 'Sim' : 'Nao' }}</dd>
+      </div>
+    </dl>
+
+    <div class="actions">
+      <button type="button" class="primary" (click)="fechar.emit()">Fechar</button>
+    </div>
+  </div>
+</section>

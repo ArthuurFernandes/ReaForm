@@ -1,1 +1,95 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+.hero-copy {
+  display: grid;
+  gap: 10px;
+}
+
+.summary-card {
+  animation: rise-in 0.35s ease;
+}
+
+.summary-header {
+  border-bottom: 1px solid rgba(11, 122, 61, 0.12);
+  gap: 16px;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  padding-top: 10px;
+}
+
+.summary-status {
+  background: #edf9f1;
+  border: 1px solid rgba(11, 122, 61, 0.18);
+  border-radius: 999px;
+  color: #0a5d2f;
+  margin: 0;
+  padding: 10px 14px;
+}
+
+.summary-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.summary-grid div {
+  background: #fff;
+  border: 1px solid rgba(11, 122, 61, 0.12);
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+
+.summary-grid dt {
+  color: #486455;
+  font-size: 0.88rem;
+  margin-bottom: 4px;
+}
+
+.summary-grid dd {
+  font-weight: 700;
+  margin: 0;
+}
+
+.phone-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.phone-summary span {
+  background: #edf9f1;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 720px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-header {
+    gap: 12px;
+  }
+}

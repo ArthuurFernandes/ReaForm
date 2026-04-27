@@ -1,12 +1,9 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { TelaPrincipalComponent } from './tela-principal/tela-principal';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [TelaPrincipalComponent],
   templateUrl: './app.html',
-  styleUrl: './app.css'
 })
-export class App {
-  protected readonly title = signal('ReaForm');
-}
+export class App {}
